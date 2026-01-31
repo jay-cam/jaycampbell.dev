@@ -6,44 +6,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <style>
+      :root {
+        --text: #222;
+        --muted: #666;
+        --accent: #0056b3;
+        --border: #e5e5e5;
+        --bg-soft: #fafafa;
+      }
+
       body {
-        font-family:
-          system-ui,
-          -apple-system,
-          BlinkMacSystemFont,
-          sans-serif;
-        max-width: 900px;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        max-width: 1000px;
         margin: 3rem auto;
         padding: 0 1.25rem;
         line-height: 1.6;
-        color: #222;
+        color: var(--text);
       }
 
       header {
-        margin-bottom: 2.5rem;
+        margin-bottom: 3rem;
       }
 
       h1 {
-        margin-bottom: 0.25rem;
+        margin: 0;
+        font-size: 2.25rem;
       }
 
       h2 {
+        margin: 0.25rem 0 0;
         font-weight: normal;
-        color: #555;
-        margin-top: 0;
+        color: var(--muted);
       }
 
       section {
-        margin-bottom: 2rem;
+        margin-bottom: 2.5rem;
+        padding: 1.25rem;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: var(--bg-soft);
+      }
+
+      h3 {
+        margin-top: 0;
+        margin-bottom: 0.75rem;
+      }
+
+      h4 {
+        margin: 1.25rem 0 0.5rem;
       }
 
       ul {
         padding-left: 1.25rem;
+        margin: 0;
+      }
+
+      li {
+        margin: 0.4rem 0;
       }
 
       a {
-        color: #0056b3;
+        color: var(--accent);
         text-decoration: none;
+        font-weight: 500;
       }
 
       a:hover {
@@ -52,10 +76,11 @@
 
       footer {
         margin-top: 4rem;
-        font-size: 0.9rem;
-        color: #666;
-        border-top: 1px solid #eee;
         padding-top: 1rem;
+        border-top: 1px solid var(--border);
+        font-size: 0.9rem;
+        color: var(--muted);
+        text-align: center;
       }
     </style>
   </head>
@@ -68,23 +93,85 @@
 
     <section>
       <h3>Team</h3>
-      <p>Jay Campbell</p>
+      <p>
+        Jay Campbell —
+        <a href="/members/jaycampbell/index.html">Personal Page</a>
+      </p>
     </section>
 
     <section>
-      <h3>Homework</h3>
+      <h3>Homework 1</h3>
+      <!-- HW1 MAIN PAGE -->
       <ul>
-        <li><a href="/hw1/">Homework 1</a></li>
-        <li>Homework 2 (TBD)</li>
-        <li>Analytics App (TBD)</li>
+        <li><a href="/hw1/">Homework 1 Main Page</a></li>
+      </ul>
+
+      <ul>
+        <li><a href="/hw1/hello.php">PHP Hello World</a></li>
+        <li><a href="/hw1/report.html">GoAccess Analytics Report</a></li>
       </ul>
     </section>
 
     <section>
-      <h3>Personal Page</h3>
-      <p>
-        <a href="/members/jaycampbell/index.html">About Me</a>
-      </p>
+      <h3>Homework 2 — Server Side Basics</h3>
+
+      <!-- HW2 MAIN PAGE -->
+      <ul>
+        <li><a href="/hw2/">Homework 2 Main Page</a></li>
+      </ul>
+
+      <h4>Perl (Provided Examples)</h4>
+      <ul>
+        <li><a href="/hw2/perl/perl-hello-html-world.pl">Hello HTML (Perl)</a></li>
+        <li><a href="/hw2/perl/perl-hello-json-world.pl">Hello JSON (Perl)</a></li>
+        <li><a href="/hw2/perl/perl-env.pl">Environment (Perl)</a></li>
+        <li><a href="/hw2/perl/perl-env-pm.pl">Environment (Perl PM)</a></li>
+        <li><a href="/hw2/perl/perl-get-echo.pl?message=test">GET Echo (Perl)</a></li>
+        <li><a href="/hw2/perl/perl-post-echo.pl">POST Echo (Perl)</a></li>
+        <li><a href="/hw2/perl/echo-perl.pl?message=test">General Echo (Perl)</a></li>
+        <li><a href="/hw2/perl/perl-sessions-1.pl">Session Set (Perl)</a></li>
+        <li><a href="/hw2/perl/perl-sessions-2.pl">Session View (Perl)</a></li>
+        <li><a href="/hw2/perl/perl-destroy-session.pl">Session Destroy (Perl)</a></li>
+      </ul>
+
+      <h4>Python</h4>
+      <ul>
+        <li><a href="/hw2/python/hello-html-python.py">Hello HTML (Python)</a></li>
+        <li><a href="/hw2/python/hello-json-python.py">Hello JSON (Python)</a></li>
+        <li><a href="/hw2/python/environment-python.py">Environment (Python)</a></li>
+        <li><a href="/hw2/python/echo-python.py">Echo (Python)</a></li>
+        <li><a href="/hw2/python/state-input.html">State (Python)</a></li>
+      </ul>
+
+      <h4>Go</h4>
+      <ul>
+        <li><a href="/hw2/go/hello-html-go.cgi">Hello HTML (Go)</a></li>
+        <li><a href="/hw2/go/hello-json-go.cgi">Hello JSON (Go)</a></li>
+        <li><a href="/hw2/go/environment-go.cgi">Environment (Go)</a></li>
+        <li><a href="/hw2/go/echo-go.cgi">Echo (Go)</a></li>
+        <li><a href="/hw2/go/state-input.html">State (Go)</a></li>
+      </ul>
+
+      <h4>NodeJS</h4>
+      <ul>
+        <li><a href="/hw2/node/hello-html-node">Hello HTML (Node)</a></li>
+        <li><a href="/hw2/node/hello-json-node">Hello JSON (Node)</a></li>
+        <li><a href="/hw2/node/environment-node">Environment (Node)</a></li>
+        <li><a href="/hw2/node/echo">Echo (Node)</a></li>
+        <li><a href="/hw2/node/state-input.html">State (Node)</a></li>
+      </ul>
+
+      <h4>Echo Form</h4>
+      <ul>
+        <li><a href="/hw2/echo-form.html">Interactive Echo Form</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>Analytics App</h3>
+      <ul>
+        <li>Analytics App (TBD)</li>
+      </ul>
     </section>
 
     <footer>

@@ -1,15 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Homework 1</title>
-</head>
-<body>
-  <h1>Homework 1</h1>
+  <meta charset="UTF-8" />
+  <title>CSE 135 — Homework 1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <ul>
-    <li><a href="hello.php">hello.php</a></li>
-    <li><a href="report.html">GoAccess Report</a></li>
-  </ul>
+  <style>
+    :root {
+      --text: #222;
+      --muted: #666;
+      --accent: #0056b3;
+      --border: #e5e5e5;
+      --bg-soft: #fafafa;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      max-width: 900px;
+      margin: 3rem auto;
+      padding: 0 1.25rem;
+      line-height: 1.6;
+      color: var(--text);
+    }
+
+    header {
+      margin-bottom: 2.5rem;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.1rem;
+    }
+
+    section {
+      padding: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg-soft);
+    }
+
+    ul {
+      padding-left: 1.25rem;
+      margin: 0;
+    }
+
+    li {
+      margin: 0.4rem 0;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      margin-top: 4rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: var(--muted);
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <nav style="margin-bottom: 1.5rem;">
+  <a href="/" style="text-decoration:none; color:#0056b3; font-weight:500;">
+    ← Home
+  </a>
+</nav>
+
+
+  <header>
+    <h1>CSE 135 — Homework 1</h1>
+  </header>
+
+  <section>
+    <ul>
+      <li><a href="hello.php">hello.php</a></li>
+      <li><a href="report.html">GoAccess Report</a></li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>Homework 1 • Jay Campbell</p>
+  </footer>
 </body>
 </html>

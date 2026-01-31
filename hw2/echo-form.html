@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CSE 135 — HW2 Echo Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --text: #222;
+      --muted: #666;
+      --accent: #0056b3;
+      --border: #e5e5e5;
+      --bg-soft: #fafafa;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      max-width: 900px;
+      margin: 3rem auto;
+      padding: 0 1.25rem;
+      line-height: 1.6;
+      color: var(--text);
+    }
+
+    h1 { margin-bottom: 1.5rem; }
+    h2 {
+      margin-top: 2.5rem;
+      margin-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.25rem;
+    }
+
+    section {
+      margin-bottom: 2.5rem;
+      padding: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg-soft);
+    }
+
+    fieldset {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1rem;
+    }
+
+    legend { font-weight: 600; padding: 0 0.5rem; }
+    label { display: block; margin-bottom: 0.75rem; }
+
+    input, select { margin-left: 0.5rem; }
+
+    button {
+      margin-top: 0.75rem;
+      padding: 0.4rem 0.75rem;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    em { color: var(--muted); }
+
+    pre {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: #fff;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Homework 2 — Echo Form</h1>
+
+<!-- ---------------- NO-JS MODE ---------------- -->
+<section>
+  <h2>No-JavaScript Mode</h2>
+
+  <form action="/hw2/python/echo-python.py" method="GET">
+    <fieldset>
+      <legend>GET only (JS disabled)</legend>
+
+      <label>
+        Message:
+        <input type="text" name="message" />
+      </label>
+
+      <label>
+        Note:
+        <input type="text" name="note" />
+      </label>
+
+      <button type="submit">Send (GET)</button>
+    </fieldset>
+  </form>
+</section>
+
+<!-- ---------------- JS MODE ---------------- -->
+<section>
+  <h2>JavaScript Enhanced Mode</h2>
+  <p><em>With JavaScript enabled, all methods, encodings, and languages are supported.</em></p>
+
+  <form id="echo-form">
+    <fieldset>
+      <legend>Echo Request</legend>
+
+      <label>
+        Language:
+        <select id="language">
+          <option value="python">Python</option>
+          <option value="node">Node</option>
+          <option value="go">Go</option>
+        </select>
+      </label>
+
+      <label>
+        Method:
+        <select id="method">
+          <option value="GET">GET</option>
+          <option value="POST">POST</option>
+          <option value="PUT">PUT</option>
+          <option value="DELETE">DELETE</option>
+        </select>
+      </label>
+
+      <label>
+        Encoding:
+        <select id="encoding">
+          <option value="form">application/x-www-form-urlencoded</option>
+          <option value="json">application/json</option>
+        </select>
+      </label>
+
+      <label>
+        Message:
+        <input type="text" id="message" />
+      </label>
+
+      <label>
+        Note:
+        <input type="text" id="note" />
+      </label>
+
+      <button type="submit">Send Request</button>
+    </fieldset>
+  </form>
+
+  <pre id="response"></pre>
+</section>
+
+<script>
+document.getElementById("echo-form").addEventListener("submit", async function (e) {
+  e.preventDefault();
+
+  const language = document.getElementById("language").value;
+  const method   = document.getElementById("method").value;
+  const encoding = document.getElementById("encoding").value;
+
+  const message = document.getElementById("message").value;
+  const note    = document.getElementById("note").value;
+
+  let endpoint;
+  if (language === "python") endpoint = "/hw2/python/echo-python.py";
+  if (language === "go")     endpoint = "/hw2/go/echo-go.cgi";
+  if (language === "node")   endpoint = "/hw2/node/echo";
+
+  if (method === "GET") {
+    const qs = `?message=${encodeURIComponent(message)}&note=${encodeURIComponent(note)}`;
+    window.location = endpoint + qs;
+    return;
+  }
+
+  const options = { method, headers: {} };
+
+  if (encoding === "json") {
+    options.headers["Content-Type"] = "application/json";
+    options.body = JSON.stringify({ message, note });
+  } else {
+    options.headers["Content-Type"] = "application/x-www-form-urlencoded";
+    options.body =
+      `message=${encodeURIComponent(message)}&note=${encodeURIComponent(note)}`;
+  }
+
+  const res = await fetch(endpoint, options);
+  document.getElementById("response").textContent = await res.text();
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CSE 135 — Homework 2</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --text: #222;
+      --muted: #666;
+      --accent: #0056b3;
+      --border: #e5e5e5;
+      --bg-soft: #fafafa;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      max-width: 1000px;
+      margin: 3rem auto;
+      padding: 0 1.25rem;
+      line-height: 1.6;
+      color: var(--text);
+    }
+
+    header {
+      margin-bottom: 3rem;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.2rem;
+    }
+
+    h2 {
+      margin-top: 2.5rem;
+      margin-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.25rem;
+    }
+
+    section {
+      margin-bottom: 2.5rem;
+      padding: 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg-soft);
+    }
+
+    ul {
+      padding-left: 1.25rem;
+      margin: 0;
+    }
+
+    li {
+      margin: 0.4rem 0;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      margin-top: 4rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: var(--muted);
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+    <nav style="margin-bottom: 1.5rem;">
+  <a href="/" style="text-decoration:none; color:#0056b3; font-weight:500;">
+    ← Home
+  </a>
+</nav>
+
+  <header>
+    <h1>CSE 135 — Homework 2</h1>
+    <p>CGI Demos implemented in multiple languages</p>
+  </header>
+
+  <section>
+    <h2>Perl</h2>
+    <ul>
+      <li><a href="/hw2/perl/perl-hello-html-world.pl">Hello HTML</a></li>
+      <li><a href="/hw2/perl/perl-hello-json-world.pl">Hello JSON</a></li>
+      <li><a href="/hw2/perl/perl-env.pl">Environment</a></li>
+      <li><a href="/hw2/perl/perl-env-pm.pl">Environment (PM)</a></li>
+      <li><a href="/hw2/perl/perl-get-echo.pl?message=test">GET Echo</a></li>
+      <li><a href="/hw2/perl/perl-post-echo.pl">POST Echo</a></li>
+      <li><a href="/hw2/perl/echo-perl.pl?message=test">General Echo</a></li>
+      <li><a href="/hw2/perl/perl-sessions-1.pl">Session (Set)</a></li>
+      <li><a href="/hw2/perl/perl-sessions-2.pl">Session (View)</a></li>
+      <li><a href="/hw2/perl/perl-destroy-session.pl">Session (Destroy)</a></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Python</h2>
+    <ul>
+      <li><a href="/hw2/python/hello-html-python.py">Hello HTML</a></li>
+      <li><a href="/hw2/python/hello-json-python.py">Hello JSON</a></li>
+      <li><a href="/hw2/python/environment-python.py">Environment</a></li>
+      <li><a href="/hw2/python/echo-python.py?message=test">Echo</a></li>
+      <li><a href="/hw2/python/state-python.py">State</a></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Node</h2>
+    <ul>
+      <li><a href="/hw2/node/hello-html-node">Hello HTML</a></li>
+      <li><a href="/hw2/node/hello-json-node">Hello JSON</a></li>
+      <li><a href="/hw2/node/environment-node">Environment</a></li>
+      <li><a href="/hw2/node/echo?message=test">Echo</a></li>
+      <li><a href="/hw2/node/state-node">State</a></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Go</h2>
+    <ul>
+      <li><a href="/hw2/go/hello-html-go.cgi">Hello HTML</a></li>
+      <li><a href="/hw2/go/hello-json-go.cgi">Hello JSON</a></li>
+      <li><a href="/hw2/go/environment-go.cgi">Environment</a></li>
+      <li><a href="/hw2/go/echo-go.cgi?message=test">Echo</a></li>
+      <li><a href="/hw2/go/state-go.cgi">State</a></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Echo Form</h2>
+    <ul>
+      <li><a href="/hw2/echo-form.html">Interactive Echo Form</a></li>
+    </ul>
+  </section>
