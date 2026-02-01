@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+  <title>Python FP State Input</title>
+  <script src="https://cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@4/dist/fp.min.js"></script>
+</head>
+<body>
+  <h1>Python State – Fingerprint Input</h1>
+
+  <form method="POST" action="state-python-fp.py">
+    <input type="hidden" name="fingerprint" id="fingerprint">
+
+    <label>
+      Message:
+      <input type="text" name="message">
+    </label>
+
+    <button type="submit">Save</button>
+  </form>
+
+  <script>
+    (async () => {
+      const fp = await FingerprintJS.load();
+      const res = await fp.get();
+      document.getElementById("fingerprint").value = res.visitorId;
+    })();
+  </script>
+</body>
+</html>
