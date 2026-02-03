@@ -1,5 +1,5 @@
 const express = require("express");
-const session = require("express-session");
+const crypto = require("crypto");
 
 /* ---------- SERVER START TIME (FOR UPTIME) ---------- */
 const SERVER_START_TIME = Date.now();
@@ -27,20 +27,34 @@ app.set("trust proxy", 1);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// ---------------- SESSION (SERVER-SIDE) ----------------
-app.use(
-    session({
-        name: "hw2sid",
-        secret: "replace-this-with-a-random-string",
-        resave: false,
-        saveUninitialized: false,
-        cookie: {
-            httpOnly: true,
-            sameSite: "lax",
-            secure: false
-        }
-    })
-);
+/* ---------- SERVER-SIDE STATE (MANUAL COOKIE) ---------- */
+const stateStore = {};
+
+function parseCookies(req) {
+    const header = req.headers.cookie;
+    if (!header) return {};
+    return Object.fromEntries(
+        header.split(";").map(c => {
+            const [k, ...v] = c.trim().split("=");
+            return [k, decodeURIComponent(v.join("="))];
+        })
+    );
+}
+
+function getSessionId(req, res) {
+    const cookies = parseCookies(req);
+    let sid = cookies.hw2sid_node;
+
+    if (!sid || !stateStore[sid]) {
+        sid = crypto.randomUUID();
+        stateStore[sid] = { value: null };
+        res.setHeader(
+            "Set-Cookie",
+            `hw2sid_node=${sid}; Path=/; HttpOnly; SameSite=Lax`
+        );
+    }
+    return sid;
+}
 
 // ---------------- HELLO HTML ----------------
 app.get("/hello-html-node", (req, res) => {
@@ -129,21 +143,23 @@ ${envKeys
 
 // ---------------- STATE SAVE ----------------
 app.post("/state-node", (req, res) => {
+    const sid = getSessionId(req, res);
     const v = (req.body.value ?? "").trim();
-    req.session.savedValue = v.length ? v : null;
+    stateStore[sid].value = v.length ? v : null;
     res.redirect("/hw2/node/state-view.html");
 });
 
 // ---------------- STATE VIEW / RESET ----------------
 app.get("/state-node", (req, res) => {
-    const uptime = getUptime();
+    const sid = getSessionId(req, res);
 
     if (req.query.reset === "true") {
-        req.session.savedValue = null;
+        stateStore[sid].value = null;
         return res.redirect("/hw2/node/state-view.html");
     }
 
-    const value = req.session.savedValue;
+    const value = stateStore[sid].value;
+    const uptime = getUptime();
 
     res.set("Content-Type", "text/html");
     res.send(`<!DOCTYPE html>
