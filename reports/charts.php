@@ -4,122 +4,135 @@ require "db.php";
 
 $pageTitle = "Charts";
 
-/* Events by Type */
-$result1 = $mysqli->query("
-SELECT event_type, COUNT(*) AS count
+ob_start();
+
+$types = $mysqli->query("
+SELECT event_type, COUNT(*) as total
 FROM events
 GROUP BY event_type
 ");
 
-$type_labels = [];
-$type_data = [];
+$typeLabels = [];
+$typeCounts = [];
 
-while ($row = $result1->fetch_assoc()) {
-$type_labels[] = $row["event_type"];
-$type_data[] = $row["count"];
+while ($row = $types->fetch_assoc()) {
+$typeLabels[] = $row["event_type"];
+$typeCounts[] = (int)$row["total"];
 }
 
-/* HTTP Method Breakdown */
-$result2 = $mysqli->query("
-SELECT request_method, COUNT(*) AS count
+$methods = $mysqli->query("
+SELECT request_method, COUNT(*) as total
 FROM events
 GROUP BY request_method
 ");
 
-$method_labels = [];
-$method_data = [];
+$methodLabels = [];
+$methodCounts = [];
 
-while ($row = $result2->fetch_assoc()) {
-$method_labels[] = $row["request_method"];
-$method_data[] = $row["count"];
+while ($row = $methods->fetch_assoc()) {
+$methodLabels[] = $row["request_method"];
+$methodCounts[] = (int)$row["total"];
 }
 
-/* Events Per Minute */
-$result3 = $mysqli->query("
-SELECT DATE_FORMAT(created_at,'%H:%i') AS minute, COUNT(*) AS count
+$timeline = $mysqli->query("
+SELECT DATE_FORMAT(created_at,'%H:%i') as minute, COUNT(*) as total
 FROM events
 GROUP BY minute
 ORDER BY minute
 ");
 
-$minute_labels = [];
-$minute_data = [];
+$timeLabels = [];
+$timeCounts = [];
 
-while ($row = $result3->fetch_assoc()) {
-$minute_labels[] = $row["minute"];
-$minute_data[] = $row["count"];
+while ($row = $timeline->fetch_assoc()) {
+$timeLabels[] = $row["minute"];
+$timeCounts[] = (int)$row["total"];
 }
 
-ob_start();
 ?>
 
-<h1>Analytics Charts</h1>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:30px">
+<div class="max-w-6xl mx-auto">
 
-<div>
-<h3>Events by Type</h3>
+<h1 class="text-2xl font-semibold mb-6">Analytics Charts</h1>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+<div class="bg-white shadow rounded-lg p-6">
+<h2 class="font-semibold mb-4">Events by Type</h2>
 <canvas id="typeChart"></canvas>
 </div>
 
-<div>
-<h3>HTTP Method Distribution</h3>
+<div class="bg-white shadow rounded-lg p-6">
+<h2 class="font-semibold mb-4">HTTP Method Distribution</h2>
 <canvas id="methodChart"></canvas>
 </div>
 
 </div>
 
-<br><br>
-
-<div>
-<h3>Events Per Minute</h3>
+<div class="bg-white shadow rounded-lg p-6 mt-6">
+<h2 class="font-semibold mb-4">Events Per Minute</h2>
 <canvas id="timelineChart"></canvas>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</div>
 
 <script>
 
-const typeLabels = <?php echo json_encode($type_labels); ?>;
-const typeData = <?php echo json_encode($type_data); ?>;
+new Chart(document.getElementById('typeChart'),{
 
-new Chart(document.getElementById("typeChart"),{
-type:"bar",
+type:'bar',
+
 data:{
-labels:typeLabels,
+labels:<?= json_encode($typeLabels) ?>,
 datasets:[{
-label:"Events by Type",
-data:typeData
+label:'Events',
+data:<?= json_encode($typeCounts) ?>,
+backgroundColor:'#3b82f6'
 }]
+},
+
+options:{
+plugins:{legend:{display:false}},
+scales:{y:{beginAtZero:true}}
 }
+
 });
 
-const methodLabels = <?php echo json_encode($method_labels); ?>;
-const methodData = <?php echo json_encode($method_data); ?>;
+new Chart(document.getElementById('methodChart'),{
 
-new Chart(document.getElementById("methodChart"),{
-type:"pie",
+type:'pie',
+
 data:{
-labels:methodLabels,
+labels:<?= json_encode($methodLabels) ?>,
 datasets:[{
-data:methodData
+data:<?= json_encode($methodCounts) ?>,
+backgroundColor:['#3b82f6','#ef4444','#10b981','#f59e0b']
 }]
 }
+
 });
 
-const minuteLabels = <?php echo json_encode($minute_labels); ?>;
-const minuteData = <?php echo json_encode($minute_data); ?>;
+new Chart(document.getElementById('timelineChart'),{
 
-new Chart(document.getElementById("timelineChart"),{
-type:"line",
+type:'line',
+
 data:{
-labels:minuteLabels,
+labels:<?= json_encode($timeLabels) ?>,
 datasets:[{
-label:"Events per Minute",
-data:minuteData,
-fill:false
+label:'Events per Minute',
+data:<?= json_encode($timeCounts) ?>,
+borderColor:'#3b82f6',
+backgroundColor:'rgba(59,130,246,0.2)',
+tension:0.3
 }]
+},
+
+options:{
+scales:{y:{beginAtZero:true}}
 }
+
 });
 
 </script>
@@ -127,3 +140,4 @@ fill:false
 <?php
 $content = ob_get_clean();
 require "views/layout.php";
+?>

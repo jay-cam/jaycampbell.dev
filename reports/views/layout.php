@@ -12,76 +12,68 @@ if (session_status() === PHP_SESSION_NONE) {
 <html>
 <head>
 <meta charset="UTF-8">
-<title><?= $pageTitle ?></title>
+<title><?= htmlspecialchars($pageTitle) ?></title>
 
-<style>
-
-body{
-font-family: Arial, Helvetica, sans-serif;
-margin:20px;
-}
-
-nav{
-margin-bottom:15px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-nav a{
-margin-right:15px;
-text-decoration:none;
-color:#0056b3;
-font-weight:500;
-}
-
-.user{
-font-size:14px;
-color:#444;
-}
-
-.stats{
-margin-bottom:15px;
-font-size:14px;
-color:#333;
-}
-
-table{
-border-collapse:collapse;
-width:100%;
-}
-
-th,td{
-border:1px solid #ddd;
-padding:4px;
-font-size:14px;
-}
-
-th{
-background:#f0f0f0;
-}
-
-</style>
+<script src="https://cdn.tailwindcss.com"></script>
 
 </head>
 
-<body>
+<body class="bg-gray-100 font-sans">
 
-<nav>
+<header class="bg-white shadow-sm border-b">
 
-<div>
-<a href="dashboard.php">Dashboard</a>
-<a href="charts.php">Charts</a>
-<a href="logout.php">Logout</a>
+<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+
+<div class="flex items-center space-x-6">
+
+<div class="font-semibold text-lg text-gray-800">
+CSE 135 Analytics
 </div>
 
-<div class="user">
-Logged in as <?= $_SESSION["user"] ?? "user" ?>
-</div>
+<nav class="flex items-center space-x-4 text-sm">
+
+<?php if ($_SESSION["role"] !== "viewer") { ?>
+
+<a href="/reports/dashboard.php"
+class="text-gray-600 hover:text-black">
+Dashboard
+</a>
+
+<a href="/reports/charts.php"
+class="text-gray-600 hover:text-black">
+Charts
+</a>
+
+<?php } ?>
+
+<a href="/reports/reports/index.php"
+class="text-gray-600 hover:text-black">
+Reports
+</a>
+
+<a href="/reports/logout.php"
+class="text-red-500 hover:text-red-700">
+Logout
+</a>
 
 </nav>
 
+</div>
+
+<div class="text-sm text-gray-600">
+Logged in as <?= htmlspecialchars($_SESSION["role"] ?? "user") ?>
+</div>
+
+</div>
+
+</header>
+
+
+<main class="max-w-7xl mx-auto px-6 py-8">
+
 <?= $content ?>
+
+</main>
 
 </body>
 </html>
